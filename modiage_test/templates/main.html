@@ -4,18 +4,20 @@
 {% endblock %}
 {% block nav-link %}
     {% if request.user.is_authenticated %}
-        <li class="nav-link">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-expanded="false">
-                    select user
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">user1</a>
-                    <a class="dropdown-item" href="#">user2</a>
+        {% if request.user.is_superuser %}
+            <li class="nav-link">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-expanded="false">
+                        select user
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">user1</a>
+                        <a class="dropdown-item" href="#">user2</a>
+                    </div>
                 </div>
-            </div>
-        </li>
+            </li>
+        {% endif %}
         <li class="nav-item btn">
             <a class="nav-link" href="{% url 'logout' %}">logout</a>
         </li>
