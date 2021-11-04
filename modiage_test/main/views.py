@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -70,3 +71,14 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('home')
+
+
+# @login_required
+class PermissionsView(View):
+
+    def get(self, request):
+        user = request.user
+        if user.is_superuser:
+            return render(request, 'permissions.html', context={'request': request})
+        else:
+            HttpResponse('<h1>You are not valid to this stage!!!</h1>')

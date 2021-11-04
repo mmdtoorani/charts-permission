@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}
+    permissions
+{% endblock %}
+
+{% block extra_header %}
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block nav-link %}
+    <li class="nav-item btn">
+        <a class="nav-link" href="{% url 'logout' %}">logout</a>
+    </li>
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h2>Striped Rows</h2>
+        <p>The .table-striped class adds zebra-stripes to a table:</p>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>username</th>
+                <th>Email</th>
+                <th>selected</th>
+                <th>permission</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>staff1</td>
+                <td>staff1@gmail.com</td>
+                <td id="val1">Chart 1</td>
+                <td>
+                    <div class="dropdown">
+                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                            select
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item">Chart 1</a>
+                            <a class="dropdown-item">Chart 2</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>staff2</td>
+                <td>staff2@gmail.com</td>
+                <td id="val2">Chart 2</td>
+                <td>
+                    <div class="dropdown">
+                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                            select
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item">Chart 1</a>
+                            <a class="dropdown-item">Chart 2</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+    let dropdown = $('.dropdown-item')
+
+       dropdown.on('click', function() {})
+    </script>
+{% endblock %}
