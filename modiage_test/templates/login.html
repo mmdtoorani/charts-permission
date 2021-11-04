@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block main %}
+    <div class="container">
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ form.username|as_crispy_field }}
+            {{ form.password1|as_crispy_field }}
+            <input class="btn btn-secondary" type="submit" name="create user" value="login">
+        </form>
+        <a href="{% url 'signup' %}">Don't you have an account?</a>
+
+    </div>
+{% endblock %}

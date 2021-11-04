@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block main %}
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ form.username|as_crispy_field }}
+
+            {{ form.email|as_crispy_field }}
+            <div class="row">
+                <div class="col-6">
+                    {{ form.password1|as_crispy_field }}
+                </div>
+                <div class="col-6">
+                    {{ form.password2|as_crispy_field }}
+                </div>
+            </div>
+            <p>what is your account level?</p>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="level" id="admin"
+                               value="admin">
+                        <label class="form-check-label" for="admin">
+                            admin
+                        </label>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="level" id="staff"
+                               value="staff">
+                        <label class="form-check-label" for="staff">
+                            staff
+                        </label>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="level" id="user"
+                               value="normal_user" checked>
+                        <label class="form-check-label" for="user">
+                            normal user
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <input class="btn btn-secondary" type="submit" name="create user" style="margin: 10px">
+            </div>
+        </form>
+        <a href="{% url 'login' %}">you already have an account?</a>
+    </div>
+
+{% endblock %}
