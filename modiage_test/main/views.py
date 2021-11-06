@@ -81,4 +81,4 @@ class PermissionsView(View):
         if user.is_superuser:
             return render(request, 'permissions.html', context={'request': request})
         else:
-            HttpResponse('<h1>You are not valid to this stage!!!</h1>')
+            return HttpResponse('<h1>You are not valid to this stage!!!</h1>')

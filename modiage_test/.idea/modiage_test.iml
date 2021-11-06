@@ -21,6 +21,8 @@
     <orderEntry type="library" name="apexcharts" level="application" />
     <orderEntry type="library" name="vue-apexcharts" level="application" />
     <orderEntry type="library" name="jquery-3.2.1.slim" level="application" />
+    <orderEntry type="library" name="@popperjs" level="application" />
+    <orderEntry type="library" name="jquery-3.6.0.slim" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />

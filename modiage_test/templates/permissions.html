@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
+{#{% load static %}#}
 {% block title %}
     permissions
 {% endblock %}
 
 {% block extra_header %}
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>#}
+    {#    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>#}
 {% endblock %}
 
 {% block nav-link %}
@@ -19,58 +18,99 @@
 
 {% block main %}
     <div class="container">
-        <h2>Striped Rows</h2>
-        <p>The .table-striped class adds zebra-stripes to a table:</p>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>username</th>
-                <th>Email</th>
-                <th>selected</th>
-                <th>permission</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>staff1</td>
-                <td>staff1@gmail.com</td>
-                <td id="val1">Chart 1</td>
-                <td>
-                    <div class="dropdown">
-                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                            select
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item">Chart 1</a>
-                            <a class="dropdown-item">Chart 2</a>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>staff2</td>
-                <td>staff2@gmail.com</td>
-                <td id="val2">Chart 2</td>
-                <td>
-                    <div class="dropdown">
-                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                            select
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item">Chart 1</a>
-                            <a class="dropdown-item">Chart 2</a>
-                        </div>
-                    </div>
-                </td>
-            </tr>
+        <h2>staff's permissions</h2>
+        <div class="row">
+            <div class="col-12">
+                <form id="form">
+                    {% csrf_token %}
+                    <table id="maim-table" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>username</th>
+                            <th>Email</th>
+                            <th>permission</th>
+                        </tr>
+                        </thead>
+                        <tbody id="main-tbody"></tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-10"></div>
+            <div class="col-2">
+                <button id="modify" type="button" class="btn btn-secondary">Modify</button>
+            </div>
+        </div>
 
-            </tbody>
-        </table>
     </div>
 
     <script>
-    let dropdown = $('.dropdown-item')
+        $.ajax({
+            url: "{% url 'staff_list' %}",
+            method: "GET",
+            success: function (data) {
+                for (let obj of data) {
+                    if (obj.is_superuser === false) {
+                        $('#main-tbody').append(`
+                            <tr>
+                                <td><input class="username" type="hidden" value="${obj.username}">${obj.username}</td>
+                                <td><input class="email" type="hidden" value="${obj.email}">${obj.email}</td>
+                                <td>
+                                    <select class="form-control" id="sel1">
+                                        <option class="option" value="نمودار شماره یک"> نمودار شماره یک </option>
+                                        <option class="option" value="نمودار شماره دو">نمودار شماره دو</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        `)
+                    }
+                }
+            }
+        })
+        $('#modify').on('click', function () {
+            let username = $('.username').val();
+            let chart = $('.option').val();
 
-       dropdown.on('click', function() {})
+            let data = {
+                'csrfmiddlewaretoken': "{{ csrf_token }}",
+                'staff': username,
+                'name': chart
+            };
+            $.ajax({
+                url: "{% url 'change_permissions' %}",
+                method: "POST",
+                data: data,
+                success: function () {
+                    console.log('success!');
+                    console.log(data);
+                }
+            })
+        })
     </script>
+    {#        <script>#}
+    {#            $.ajax({#}
+    {#                url: "{% url 'chart_list' %}",#}
+    {#                method: "GET",#}
+    {#                success: function (charts) {#}
+    {#                    for (let chart of charts) {#}
+    {#                        console.log(chart)#}
+    {#$('#sel1').append(#}
+    {#    `<option>${chart.name}</option>`#}
+    {#)#}
+    {##}
+    {#                    }#}
+    {#                }#}
+    {#            })#}
+    {#        </script>#}
+
+
+    {#        <script>#}
+    {#        let dropdown = $('.dropdown-item')#}
+    {#        let selected = dropdown.parent().parent().parent().#}
+    {#           dropdown.on('click', function() {#}
+    {#               selected.innerText = 'salam'#}
+    {#    console.log(dropdown.val());#}
+    {#           })#}
+    {#        </script>#}
 {% endblock %}
